@@ -196,8 +196,8 @@ State BehaviorPlannerFSM::state_transition(const State& ego_state, State goal,
     // TODO-maintain the same goal when in STOPPED state: Make sure the new goal
     // is the same as the previous goal. That way we keep/maintain the goal at
     // the stop line. goal = ...;
-       //goal = ;  // Keep previous goal. Stay where you are. // <- Fix This
-
+    goal = _goal; ;  // Keep previous goal. Stay where you are. // <- FixED This
+      
     long long stopped_secs =
         std::chrono::duration_cast<std::chrono::seconds>(
             std::chrono::high_resolution_clock::now() - _start_stop_time)
