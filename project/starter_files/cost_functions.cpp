@@ -70,7 +70,10 @@ double collision_circles_cost_spiral(const std::vector<PathPoint>& spiral,
           // TODO-Distance from circles to obstacles/actor: How do you calculate
           // the distance between the center of each circle and the
           // obstacle/actor
-          double dist = std::sqrt( std::pow((circle_center_x - obst.location.x), 2) + std::pow((circle_center_y - obst.location.y), 2) );  // <- FIXED
+          auto delta_dist_circle_center_to_obst_x = circle_center_x - obst.location.x;
+          auto delta_dist_circle_center_to_obst_y = circle_center_y - obst.location.y;
+          double dist = std::sqrt( delta_dist_circle_center_to_obst_x*delta_dist_circle_center_to_obst_x + 
+              delta_dist_circle_center_to_obst_y * delta_dist_circle_center_to_obst_y );  // <- FIXED
 
           collision = (dist < (CIRCLE_RADII[c] + CIRCLE_RADII[c2]));
         }
