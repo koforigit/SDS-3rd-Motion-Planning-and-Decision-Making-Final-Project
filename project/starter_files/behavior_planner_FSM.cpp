@@ -79,7 +79,7 @@ double BehaviorPlannerFSM::get_look_ahead_distance(const State& ego_state) {
   // TODO-Lookahead: One way to find a reasonable lookahead distance is to find
   // the distance you will need to come to a stop while traveling at speed V and
   // using a comfortable deceleration.
-  auto look_ahead_distance = std::abs(( 0.0 - velocity_mag * velocity_mag ) / (2.0 * accel_mag));  // <- FixED This
+  auto look_ahead_distance = std::abs(( 0.0 - velocity_mag * velocity_mag ) / (2.0 * max_accel));  // <- FixED This
 
   // LOG(INFO) << "Calculated look_ahead_distance: " << look_ahead_distance;
 
@@ -141,7 +141,6 @@ State BehaviorPlannerFSM::state_transition(const State& ego_state, State goal,
       // use cosine and sine to get x and y
       //
       auto ang = goal.rotation.yaw + M_PI;
-      auto _stop_line_buffer = 1.0;
       goal.location.x += (std::cos(ang))*_stop_line_buffer;  // <- FixED This
       goal.location.y += (std::sin(ang))*_stop_line_buffer;  // <- FixED This
 
@@ -196,7 +195,7 @@ State BehaviorPlannerFSM::state_transition(const State& ego_state, State goal,
     // TODO-maintain the same goal when in STOPPED state: Make sure the new goal
     // is the same as the previous goal. That way we keep/maintain the goal at
     // the stop line. goal = ...;
-    goal = _goal; ;  // Keep previous goal. Stay where you are. // <- FixED This
+    goal = _goal;  // Keep previous goal. Stay where you are. // <- FixED This
       
     long long stopped_secs =
         std::chrono::duration_cast<std::chrono::seconds>(
